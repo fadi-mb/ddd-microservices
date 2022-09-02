@@ -1,1 +1,5 @@
-com/food/ordering/system/App.class
+com\food\ordering\system\order\service\valueobject\TrackingId.class
+com\food\ordering\system\order\service\entity\OrderItem$Builder.class
+com\food\ordering\system\order\service\entity\Order$Builder.class
+com\food\ordering\system\order\service\entity\Product.class
+com\food\ordering\system\order\service\exception\OrderDomainException.class
