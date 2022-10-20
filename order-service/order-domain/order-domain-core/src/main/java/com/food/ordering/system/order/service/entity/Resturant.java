@@ -1,12 +1,14 @@
 package com.food.ordering.system.order.service.entity;
 
 import com.food.ordering.system.entity.AggregateRoot;
+import com.food.ordering.system.valueobject.ProductId;
 import com.food.ordering.system.valueobject.RestaurantId;
 
-import java.util.List;
+import java.util.HashMap;
 
 public class Resturant extends AggregateRoot<RestaurantId> {
-    private List<Product> products;
+
+    private HashMap<ProductId, Product> products;
     private boolean active;
 
     private Resturant(Builder builder) {
@@ -15,14 +17,22 @@ public class Resturant extends AggregateRoot<RestaurantId> {
         active = builder.active;
     }
 
-    public static Builder newBuilder() {
+    public HashMap<ProductId, Product> getProducts() {
+        return products;
+    }
+
+    public boolean isActive() {
+        return active;
+    }
+
+    public static Builder builder() {
         return new Builder();
     }
 
 
     public static final class Builder {
         private RestaurantId restaurantId;
-        private List<Product> products;
+        private HashMap<ProductId, Product> products;
         private boolean active;
 
         private Builder() {
@@ -33,7 +43,7 @@ public class Resturant extends AggregateRoot<RestaurantId> {
             return this;
         }
 
-        public Builder products(List<Product> val) {
+        public Builder products(HashMap<ProductId, Product> val) {
             products = val;
             return this;
         }

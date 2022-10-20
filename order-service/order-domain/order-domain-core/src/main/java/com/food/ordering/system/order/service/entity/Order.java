@@ -146,6 +146,18 @@ public class Order extends AggregateRoot<OrderId> {
         return items;
     }
 
+    public TrackingId getTrackingId() {
+        return trackingId;
+    }
+
+    public OrderStatus getOrderStatus() {
+        return orderStatus;
+    }
+
+    public List<String> getFailureMessages() {
+        return failureMessages;
+    }
+
     public static final class Builder {
         private OrderId orderId;
         private CustomerId customerId;
