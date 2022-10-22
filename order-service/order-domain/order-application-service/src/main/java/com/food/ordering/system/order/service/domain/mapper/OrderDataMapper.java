@@ -3,12 +3,16 @@ package com.food.ordering.system.order.service.domain.mapper;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderCommand;
 import com.food.ordering.system.order.service.domain.dto.create.CreateOrderResponse;
 import com.food.ordering.system.order.service.domain.dto.create.OrderAddress;
+import com.food.ordering.system.order.service.domain.dto.track.TrackOrderResponse;
 import com.food.ordering.system.order.service.entity.Order;
 import com.food.ordering.system.order.service.entity.OrderItem;
 import com.food.ordering.system.order.service.entity.Product;
 import com.food.ordering.system.order.service.entity.Resturant;
 import com.food.ordering.system.order.service.valueobject.StreetAddress;
-import com.food.ordering.system.valueobject.*;
+import com.food.ordering.system.valueobject.CustomerId;
+import com.food.ordering.system.valueobject.Money;
+import com.food.ordering.system.valueobject.ProductId;
+import com.food.ordering.system.valueobject.RestaurantId;
 import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
@@ -28,11 +32,11 @@ public class OrderDataMapper {
                 .build();
     }
 
-    public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand){
+    public Order createOrderCommandToOrder(CreateOrderCommand createOrderCommand) {
         return Order.builder()
                 .customerId(new CustomerId(createOrderCommand.getCustomerId()))
                 .restaurantId(new RestaurantId(createOrderCommand.getRestaurantId()))
-                .deliveryAddress( orderAddressToStreetAddress(createOrderCommand.getAddress()))
+                .deliveryAddress(orderAddressToStreetAddress(createOrderCommand.getAddress()))
                 .price(new Money(createOrderCommand.getPrice()))
                 .items(orderItemsToOrderItemsEntities(createOrderCommand.getItems()))
                 .build();
@@ -56,11 +60,19 @@ public class OrderDataMapper {
         );
     }
 
-    public CreateOrderResponse orderToCreateOrderResponse(Order savedOrder,String message) {
+    public CreateOrderResponse orderToCreateOrderResponse(Order savedOrder, String message) {
         return CreateOrderResponse.builder()
                 .orderTrackingId(savedOrder.getTrackingId().getValue())
                 .status(savedOrder.getOrderStatus())
                 .message(message)
+                .build();
+    }
+
+    public TrackOrderResponse orderToTrackOrderResponse(Order order) {
+        return TrackOrderResponse.builder()
+                .orderTrackingId(order.getTrackingId().getValue())
+                .status(order.getOrderStatus())
+                .failureMessages(order.getFailureMessages())
                 .build();
     }
 }
